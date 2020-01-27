@@ -56,10 +56,11 @@ const ADMIN = "admin"
 // TODO: Make kubeflow roles configurable (krishnadurai)
 // This will enable customization of roles.
 const (
-	kubeflowAdmin       = "kubeflow-admin"
-	kubeflowEdit        = "kubeflow-edit"
-	kubeflowView        = "kubeflow-view"
-	istioInjectionLabel = "istio-injection"
+	kubeflowAdmin           = "kubeflow-admin"
+	kubeflowEdit            = "kubeflow-edit"
+	kubeflowView            = "kubeflow-view"
+	istioInjectionLabel     = "istio-injection"
+	istioGenerateCertsLabel = "ca.istio.io/override"
 )
 
 var kubeflowNamespaceLabels = map[string]string{
@@ -124,6 +125,7 @@ func (r *ProfileReconciler) Reconcile(request ctrl.Request) (ctrl.Result, error)
 			// inject istio sidecar to all pods in target namespace by default.
 			Labels: map[string]string{
 				istioInjectionLabel: "enabled",
+				istioGenerateCertsLabel: "true",
 			},
 			Name: instance.Name,
 		},
